@@ -1,5 +1,5 @@
 {
-  "name": "tauri-app",
+  "name": "petri-net-visualizer",
   "version": "0.0.1",
   "scripts": {
     "dev": "tauri dev",

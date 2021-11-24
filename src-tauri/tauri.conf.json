@@ -1,6 +1,6 @@
 {
   "package": {
-    "productName": "tauri-app",
+    "productName": "petri-net-visualizer",
     "version": "0.1.0"
   },
   "build": {
@@ -53,7 +53,7 @@
     },
     "windows": [
       {
-        "title": "Tauri App",
+        "title": "Petri Net Visualizer",
         "width": 800,
         "height": 600,
         "resizable": true,
