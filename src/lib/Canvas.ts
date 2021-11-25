@@ -23,8 +23,6 @@ export class CanvasManager {
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
 
-        this.ctx.fillStyle = "white";
-        this.ctx.strokeStyle = "black";
         this.ctx.lineWidth = 3;
         this.ctx.font = '24px "JetBrains Mono", monospace';
         this.ctx.textBaseline = "middle";
@@ -35,7 +33,7 @@ export class CanvasManager {
         this.canvas.addEventListener("mousedown", handler);
     }
 
-    drawShape(shape: Shape) {
+    drawShape(shape: Shape, stroke = "black") {
         this.ctx.beginPath();
         if (shape.shape === "square")
             this.ctx.rect(
@@ -45,11 +43,14 @@ export class CanvasManager {
                 Shape.unit
             );
         else this.ctx.arc(shape.x, shape.y, Shape.unit / 2, 0, 2 * Math.PI);
+
+        this.ctx.fillStyle = "white";
         this.ctx.fill();
+        this.ctx.strokeStyle = stroke;
         this.ctx.stroke();
     }
 
-    connect(shape: Shape, other: Shape) {
+    connect(shape: Shape, other: Shape, stroke = "black") {
         const dx = other.x - shape.x;
         const dy = other.y - shape.y;
         const d = Math.sqrt(dx * dx + dy * dy);
@@ -87,29 +88,27 @@ export class CanvasManager {
             end.x - 10 * Math.cos(angle + Math.PI / 6),
             end.y - 10 * Math.sin(angle + Math.PI / 6)
         );
+
+        this.ctx.strokeStyle = stroke;
         this.ctx.stroke();
     }
 
-    drawPlace(place: Place) {
+    drawPlace(place: Place, stroke = "black") {
         this.drawShape(place.shape);
-        this.ctx.fillStyle = "black";
-        this.ctx.fillText(`${place.tokens}`, place.shape.x, place.shape.y);
 
         const labelPos =
             place.label.position === "above"
                 ? { x: place.shape.x, y: place.shape.y - Shape.unit }
                 : { x: place.shape.x, y: place.shape.y + Shape.unit };
 
+        this.ctx.fillStyle = stroke;
+        this.ctx.fillText(`${place.tokens}`, place.shape.x, place.shape.y);
         this.ctx.fillText(place.label.content, labelPos.x, labelPos.y);
-
-        this.ctx.fillStyle = "white";
     }
 
     drawTransition(transition: Transition) {
         if (transition.isEnabled()) {
-            this.ctx.strokeStyle = "red";
-            this.drawShape(transition.shape);
-            this.ctx.strokeStyle = "black";
+            this.drawShape(transition.shape, "red");
         } else this.drawShape(transition.shape);
         for (const post of transition.postset) {
             this.connect(transition.shape, post.shape);
@@ -118,16 +117,14 @@ export class CanvasManager {
             this.connect(pre.shape, transition.shape);
         }
 
-        this.ctx.fillStyle = "black";
 
         const labelPos =
-            transition.label.position === "above"
-                ? { x: transition.shape.x, y: transition.shape.y - Shape.unit }
-                : { x: transition.shape.x, y: transition.shape.y + Shape.unit };
+        transition.label.position === "above"
+        ? { x: transition.shape.x, y: transition.shape.y - Shape.unit }
+        : { x: transition.shape.x, y: transition.shape.y + Shape.unit };
 
+        this.ctx.fillStyle = "black";
         this.ctx.fillText(transition.label.content, labelPos.x, labelPos.y);
-
-        this.ctx.fillStyle = "white";
     }
 
     drawPlaces(places: Place[]) {
