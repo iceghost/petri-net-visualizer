@@ -80,7 +80,7 @@
     {#key place.tokens}
         <text
             transition:fade|local={{ duration: 100 }}
-            class="text-xl font-bold"
+            class="text-xl font-bold bg-white"
             x={place.shape.x}
             y={place.shape.y}
             alignment-baseline="central"

@@ -25,14 +25,14 @@
             <Card
                 title="Mạng Petri bệnh nhân 🙋"
                 description="Mô hình mạng Petri cho các bệnh nhân khám bệnh"
-                imgSrc="http://icdn.dantri.com.vn/zoom/1200_630/2019/07/08/nguoi-dan-xep-hang-kham-benh-tu-sang-som-5-1562588880261.jpg"
+                imgSrc="/nguoi-dan.webp"
                 alt="Bệnh nhân xếp hàng"
                 href="/demo/2"
             />
             <Card
                 title="Mạng Petri tổng hợp 🏥"
                 description="Mô hình mạng Petri tổng hợp cho quá trình khám bệnh"
-                imgSrc="https://file3.qdnd.vn/data/images/0/2021/09/15/vuongthuy/15092021vthuy21.jpg?dpi=150&quality=100&w=870"
+                imgSrc="/chua-benh.jpg"
                 alt="Khám bệnh COVID"
                 href="/demo/3"
             />

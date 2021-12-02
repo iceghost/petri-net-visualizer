@@ -6,19 +6,23 @@
     import PetriNetComponent from "$lib/components/PetriNet.svelte";
     import { fly } from "svelte/transition";
     import { flip } from "svelte/animate";
+import { setContext } from 'svelte';
 
     const free = new Place(4, 2, 1, "free", "above");
+    const inside = new Place(6, 6, 0, "inside", "below");
     const busy = new Place(6, 4, 0, "busy", "below");
     const docu = new Place(8, 2, 0, "docu", "above");
     let wait = new Place(2, 4, 3, "wait", "below");
     const end = new Place(10, 4, 0, "end", "below");
 
-    const start = new Transition(4, 4, [wait, free], [busy], "start", "below");
-    const change = new Transition(8, 4, [busy], [docu, end], "change", "below");
+    const start = new Transition(4, 4, [wait, free], [busy, inside], "start", "below");
+    const change = new Transition(8, 4, [busy, inside], [docu, end], "change", "below");
     const done = new Transition(6, 2, [docu], [free], "done", "above");
 
+    setContext("arrow exceptions", [{ from: start.shape, to: inside.shape, fromDir: "bottom", toDir: "left"}])
+
     let petriNet = new PetriNet(
-        [free, busy, docu, wait, end],
+        [free, busy, inside, docu, wait, end],
         [start, change, done]
     );
     function setPatients(value) {
@@ -42,7 +46,7 @@
 
 <main class="h-[calc(100vh-3rem)] flex flex-col sm:flex-row items-stretch">
     <aside
-        class="p-4 sm:w-1/3 sm:min-w-[12rem] bg-slate-50 border-b-1.5 sm:border-r-1.5 overflow-y-scroll"
+        class="p-4 sm:w-full sm:max-w-sm bg-slate-50 border-b-1.5 sm:border-r-1.5 overflow-y-scroll"
     >
         <p>
             Số bệnh nhân ban đầu:

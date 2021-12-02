@@ -27,16 +27,16 @@
             </marker>
         </defs>
         {#each petriNet.transitions as transition}
-            <TransitionComponent
-                {transition}
-                on:click={() => fire(transition)}
-            />
             {#each transition.preset as pre}
                 <Arrow enabled={transition.isEnabled()} from={pre.shape} to={transition.shape} />
             {/each}
             {#each transition.postset as post}
                 <Arrow enabled={transition.isEnabled()} from={transition.shape} to={post.shape} />
             {/each}
+            <TransitionComponent
+                {transition}
+                on:click={() => fire(transition)}
+            />
         {/each}
         {#each petriNet.places as place}
             <PlaceComponent {place} />

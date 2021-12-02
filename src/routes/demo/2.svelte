@@ -39,7 +39,7 @@
 
 <main class="h-[calc(100vh-3rem)] flex flex-col sm:flex-row items-stretch">
     <aside
-        class="p-4 sm:w-1/3 sm:min-w-[12rem] bg-slate-50 border-b-1.5 sm:border-r-1.5 overflow-y-scroll"
+        class="p-4 sm:w-full sm:max-w-sm bg-slate-50 border-b-1.5 sm:border-r-1.5 overflow-y-scroll"
     >
         <p>
             Số bệnh nhân ban đầu:

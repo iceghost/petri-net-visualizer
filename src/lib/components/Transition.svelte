@@ -8,24 +8,25 @@
 
 <g on:click class:enable class="cursor-not-allowed">
     <rect
-    x={transition.shape.x - Shape.unit / 2}
-    y={transition.shape.y - Shape.unit / 2}
-    width={Shape.unit}
-    height={Shape.unit}
-    class:enable
-    filter="url(#shadow)"
+        x={transition.shape.x - Shape.unit / 2}
+        y={transition.shape.y - Shape.unit / 2}
+        width={Shape.unit}
+        height={Shape.unit}
+        class:enable
+        filter="url(#shadow)"
     />
     <text
-    class="fill-slate-500"
-    x={transition.shape.x}
-    y={transition.shape.y + (transition.label.position == "below"
-        ? 0.8 * Shape.unit
-        : -0.8 * Shape.unit)}
-    alignment-baseline="central"
-    text-anchor="middle"
+        class="fill-slate-500"
+        x={transition.shape.x}
+        y={transition.shape.y +
+            (transition.label.position == "below"
+                ? 0.8 * Shape.unit
+                : -0.8 * Shape.unit)}
+        alignment-baseline="central"
+        text-anchor="middle"
     >
-    {transition.label.content}
-</text>
+        {transition.label.content}
+    </text>
 </g>
 
 <style lang="postcss">
