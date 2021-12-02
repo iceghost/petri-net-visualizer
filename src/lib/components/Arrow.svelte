@@ -3,6 +3,7 @@
 
     export let from: Shape;
     export let to: Shape;
+    export let enabled = false;
 
     let fromDir, toDir;
     $: {
@@ -28,12 +29,17 @@
 </script>
 
 <path
+    class="arrow"
+    class:enabled
     d="M{getPoint(from.x, from.y, fromDir)} L{getPoint(to.x, to.y, toDir)}"
-    marker-end="url(#triangle)"
+    marker-end={enabled ? "url(#enabled-triangle)" : "url(#triangle)"}
 />
 
 <style lang="postcss">
-    path {
-        @apply stroke-blue-500;
+    :global(.arrow) {
+        @apply fill-slate-300 stroke-slate-300;
+    }
+    .enabled {
+        @apply stroke-green-400;
     }
 </style>

@@ -5,26 +5,37 @@ export interface Marking {
     [name: string]: number;
 }
 
-export type FireSequence = string[];
-
 export default class PetriNet {
     places: Place[];
     transitions: Transition[];
+    initialMarking: Marking;
+    firings: { transition: string; marking: Marking }[];
 
     constructor(places: Place[], transitions: Transition[]) {
         this.places = places;
         this.transitions = transitions;
+        this.initialMarking = this.getMarking();
+        this.firings = [];
     }
 
     getEnabledTransitions(): Transition[] {
         return this.transitions.filter((t) => t.isEnabled());
     }
 
+    fire(transition: Transition) {
+        if (transition.isEnabled()) {
+            transition.fire();
+            this.firings.push({
+                transition: transition.label.content,
+                marking: this.getMarking(),
+            });
+        }
+    }
+
     getMarking(): Marking {
         const marking: Marking = {};
         for (const place of this.places) {
-            if (place.tokens)
-                marking[place.label.content] = place.tokens;
+            if (place.tokens) marking[place.label.content] = place.tokens;
         }
         return marking;
     }
@@ -33,5 +44,11 @@ export default class PetriNet {
         for (const place of this.places) {
             place.tokens = marking[place.label.content] || 0;
         }
+        this.firings = [];
+    }
+
+    reset() {
+        this.firings = [];
+        this.setMarking(this.initialMarking);
     }
 }

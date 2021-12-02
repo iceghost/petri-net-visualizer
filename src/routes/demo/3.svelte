@@ -1,20 +1,10 @@
 <script lang="ts">
     import Place from "$lib/Place";
     import Transition from "$lib/Transition";
-    import TransitionComponent from "$lib/components/Transition.svelte";
-    import PlaceComponent from "$lib/components/Place.svelte";
-    import { CanvasManager } from "$lib/Canvas";
     import PetriNet, * as PN from "$lib/PetriNet";
-    import { onMount } from "svelte";
     import Marking from "$lib/components/Marking.svelte";
-    import Arrow from "$lib/components/Arrow.svelte";
-
-    const initialMarking = {
-        free: 1,
-        wait: 3,
-    };
-
-    let prevMarkings: PN.Marking[] = [initialMarking];
+    import PetriNetComponent from "$lib/components/PetriNet.svelte";
+    import { fly } from "svelte/transition";
 
     const free = new Place(4, 2, 1, "free", "above");
     const busy = new Place(6, 4, 0, "busy", "below");
@@ -29,76 +19,50 @@
     let petriNet = new PetriNet(
         [free, busy, docu, wait, end],
         [start, change, done]
-        );
+    );
+
+    $: prevFirings = [...petriNet.firings];
 
     function fire(transition: Transition) {
-        transition.fire();
-        prevMarkings.push(petriNet.getMarking());
-        prevMarkings = prevMarkings;
+        petriNet.fire(transition);
         petriNet = petriNet;
     }
-    function reset(marking) {
-        petriNet.setMarking(marking);
+    function reset() {
+        petriNet.reset();
         petriNet = petriNet;
     }
 </script>
-<main class="h-[calc(100vh-3rem)] flex items-stretch">
-    <aside class="w-1/3 bg-slate-50 border-r-1.5">
+
+<main
+    class="h-full min-h-[calc(100vh-3rem)] flex flex-col sm:flex-row items-stretch"
+>
+    <aside
+        class="p-4 sm:w-1/3 sm:min-w-[12rem] bg-slate-50 border-b-1.5 sm:border-r-1.5"
+    >
         <p>Chọn transition muốn fire:</p>
 
         {#each petriNet.getEnabledTransitions() as transition}
-        <button on:click={() => fire(transition)}>
-            {transition.label.content}
-        </button>
+            <button on:click={() => fire(transition)}>
+                {transition.label.content}
+            </button>
         {:else}
-        <p>Không còn enabled transition.</p>
+            <p>Không còn enabled transition.</p>
         {/each}
 
-        <div>
-            Markings:
-            <p>
-                {#each prevMarkings as marking}
-                <Marking {marking} />
-                {/each}
-            </p>
+        <div class="flex items-center justify-between">
+            <h2>Markings:</h2>
+            <button
+                class="px-2 py-0.5 text-green-600 border-1.5 border-b-green-500 border-transparent hover:border-green-500 hover:shadow-md active:shadow-none rounded-md"
+                on:click={() => reset()}>Reset ♻️</button
+            >
         </div>
-
-        <button on:click={() => reset(initialMarking)}>Reset</button>
+        <div class="transition-[max-height] duration-500">
+            <Marking marking={petriNet.initialMarking} />
+            {#each petriNet.firings as { transition, marking }}
+                <p transition:fly|local={{ x: 0, y: -10 }}>⬇️ {transition}</p>
+                <Marking {marking} />
+            {/each}
+        </div>
     </aside>
-    <svg class="w-full">
-        <defs>
-            <!-- prettier-ignore -->
-            <marker id="triangle" viewBox="0 0 10 10"
-            refX="10" refY="5"
-            markerUnits="strokeWidth"
-            markerWidth="10" markerHeight="10"
-            orient="auto">
-            <path d="M 0 0 L 10 5 L 0 10 z" class="fill-blue-500"/>
-        </marker>
-        <!-- prettier-ignore -->
-        <filter id="shadow" x="0" y="0" width="100%" height="120%">
-            <feOffset result="offOut" in="SourceAlpha" dx="0" dy="5" />
-            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
-            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-        </filter>
-    </defs>
-    {#each petriNet.transitions as transition}
-    <TransitionComponent {transition} />
-    {#each transition.preset as pre}
-    <Arrow from={pre.shape} to={transition.shape} />
-    {/each}
-    {#each transition.postset as post}
-    <Arrow from={transition.shape} to={post.shape} />
-    {/each}
-    {/each}
-    {#each petriNet.places as place}
-    <PlaceComponent {place} />
-    {/each}
-</svg>
+    <PetriNetComponent bind:petriNet />
 </main>
-
-<style lang="postcss">
-    button {
-        @apply bg-green-200 text-green-900 px-2 py-1;
-    }
-</style>
