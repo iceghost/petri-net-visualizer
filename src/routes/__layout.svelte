@@ -1,11 +1,7 @@
 <script>
-  import '../app.css';
+    import "../app.css";
 </script>
 
-<div class="font-body">
-  <slot />
+<div class="font-body text-slate-800 max-h-screen">
+    <slot />
 </div>
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Hepta+Slab&family=JetBrains+Mono&display=swap');
-</style>

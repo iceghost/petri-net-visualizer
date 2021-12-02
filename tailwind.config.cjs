@@ -1,15 +1,22 @@
 const config = {
-  mode: "jit",
-  content: ["./src/**/*.{html,js,svelte,ts}"],
+    mode: "jit",
+    content: ["./src/**/*.{html,js,svelte,ts}"],
 
-  theme: {
-    fontFamily: {
-      body: ["Hepta Slab", "sans-serif"]
+    theme: {
+        fontFamily: {
+            body: ["latin_modern_sans10_regular", "sans-serif"],
+        },
+        extend: {
+            borderWidth: {
+                1.5: "1.5px",
+            },
+            strokeWidth: {
+                1.5: "1.5px",
+            },
+        },
     },
-    extend: {},
-  },
 
-  plugins: [],
+    plugins: [],
 };
 
 module.exports = config;

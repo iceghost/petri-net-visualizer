@@ -2,3 +2,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "latin_modern_sans10_regular";
+    src: url("/fonts/lmsans10-regular-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "latin_modern_sans10_regular";
+    src: url("/fonts/lmsans10-bold-webfont.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+}

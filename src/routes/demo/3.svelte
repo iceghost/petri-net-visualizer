@@ -29,7 +29,7 @@
     let petriNet = new PetriNet(
         [free, busy, docu, wait, end],
         [start, change, done]
-    );
+        );
 
     function fire(transition: Transition) {
         transition.fire();
@@ -42,60 +42,59 @@
         petriNet = petriNet;
     }
 </script>
-
-<main class="min-h-screen w-screen flex items-stretch">
-    <svg class="w-full">
-        <defs>
-            <!-- prettier-ignore -->
-            <marker id="triangle" viewBox="0 0 10 10"
-                refX="10" refY="5"
-                markerUnits="strokeWidth"
-                markerWidth="10" markerHeight="10"
-                orient="auto">
-            <path d="M 0 0 L 10 5 L 0 10 z" class="fill-blue-500"/>
-            </marker>
-            <!-- prettier-ignore -->
-            <filter id="shadow" x="0" y="0" width="100%" height="120%">
-                <feOffset result="offOut" in="SourceAlpha" dx="0" dy="5" />
-                <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
-                <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-            </filter>
-          </defs>
-        {#each petriNet.transitions as transition}
-            <TransitionComponent {transition} />
-            {#each transition.preset as pre}
-                <Arrow from={pre.shape} to={transition.shape} />
-            {/each}
-            {#each transition.postset as post}
-                <Arrow from={transition.shape} to={post.shape} />
-            {/each}
-        {/each}
-        {#each petriNet.places as place}
-            <PlaceComponent {place} />
-        {/each}
-    </svg>
-    <aside class="w-1/3 bg-slate-800 text-white">
+<main class="h-[calc(100vh-3rem)] flex items-stretch">
+    <aside class="w-1/3 bg-slate-50 border-r-1.5">
         <p>Chọn transition muốn fire:</p>
 
         {#each petriNet.getEnabledTransitions() as transition}
-            <button on:click={() => fire(transition)}>
-                {transition.label.content}
-            </button>
+        <button on:click={() => fire(transition)}>
+            {transition.label.content}
+        </button>
         {:else}
-            <p>Không còn enabled transition.</p>
+        <p>Không còn enabled transition.</p>
         {/each}
 
         <div>
             Markings:
             <p>
                 {#each prevMarkings as marking}
-                    <Marking {marking} />
+                <Marking {marking} />
                 {/each}
             </p>
         </div>
 
         <button on:click={() => reset(initialMarking)}>Reset</button>
     </aside>
+    <svg class="w-full">
+        <defs>
+            <!-- prettier-ignore -->
+            <marker id="triangle" viewBox="0 0 10 10"
+            refX="10" refY="5"
+            markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10"
+            orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="fill-blue-500"/>
+        </marker>
+        <!-- prettier-ignore -->
+        <filter id="shadow" x="0" y="0" width="100%" height="120%">
+            <feOffset result="offOut" in="SourceAlpha" dx="0" dy="5" />
+            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+        </filter>
+    </defs>
+    {#each petriNet.transitions as transition}
+    <TransitionComponent {transition} />
+    {#each transition.preset as pre}
+    <Arrow from={pre.shape} to={transition.shape} />
+    {/each}
+    {#each transition.postset as post}
+    <Arrow from={transition.shape} to={post.shape} />
+    {/each}
+    {/each}
+    {#each petriNet.places as place}
+    <PlaceComponent {place} />
+    {/each}
+</svg>
 </main>
 
 <style lang="postcss">
