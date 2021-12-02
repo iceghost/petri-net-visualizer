@@ -7,19 +7,16 @@
     import { fly } from "svelte/transition";
     import { flip } from "svelte/animate";
 
-    const free = new Place(4, 2, 1, "free", "above");
-    const busy = new Place(6, 4, 0, "busy", "below");
-    const docu = new Place(8, 2, 0, "docu", "above");
     let wait = new Place(2, 4, 3, "wait", "below");
+    const inside = new Place(6, 4, 0, "inside", "below");
     const end = new Place(10, 4, 0, "end", "below");
 
-    const start = new Transition(4, 4, [wait, free], [busy], "start", "below");
-    const change = new Transition(8, 4, [busy], [docu, end], "change", "below");
-    const done = new Transition(6, 2, [docu], [free], "done", "above");
+    const start = new Transition(4, 4, [wait], [inside], "start", "below");
+    const change = new Transition(8, 4, [inside], [end], "change", "below");
 
     let petriNet = new PetriNet(
-        [free, busy, docu, wait, end],
-        [start, change, done]
+        [inside, wait, end],
+        [start, change]
     );
     function setPatients(value) {
         wait.tokens = value || 0;

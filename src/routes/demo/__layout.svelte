@@ -1,3 +1,26 @@
+<script context="module">
+    const titles = [
+        "Mô hình mạng Petri cho bác sĩ",
+        "Mô hình mạng Petri cho bệnh nhân",
+        "Mô hình mạng Petri tổng hợp",
+    ]
+
+    export const load = ({ page }) => {
+        return {
+            props: {
+                title: titles[Number(page.path.slice(-1)) - 1]
+            }
+        }
+    }
+</script>
+<script>
+    export let title;
+</script>
+
+<svelte:head>
+    <title>{title} | BTL Mô hình hóa Toán học</title>
+</svelte:head>
+
 <div class="flex items-center h-12 px-4 bg-slate-50 border-b-1.5">
     <!-- prettier-ignore -->
     <!-- arrow left -->
@@ -14,6 +37,6 @@
             />
         </svg>
     </a>
-    <span class="ml-4 text-sm">Home</span>
+    <span class="ml-4 text-sm">{title}</span>
 </div>
 <slot />

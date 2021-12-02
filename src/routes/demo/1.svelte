@@ -10,20 +10,18 @@
     const free = new Place(4, 2, 1, "free", "above");
     const busy = new Place(6, 4, 0, "busy", "below");
     const docu = new Place(8, 2, 0, "docu", "above");
-    let wait = new Place(2, 4, 3, "wait", "below");
-    const end = new Place(10, 4, 0, "end", "below");
 
-    const start = new Transition(4, 4, [wait, free], [busy], "start", "below");
-    const change = new Transition(8, 4, [busy], [docu, end], "change", "below");
+    const start = new Transition(4, 4, [free], [busy], "start", "below");
+    const change = new Transition(8, 4, [busy], [docu], "change", "below");
     const done = new Transition(6, 2, [docu], [free], "done", "above");
 
     let petriNet = new PetriNet(
-        [free, busy, docu, wait, end],
+        [free, busy, docu],
         [start, change, done]
     );
-    function setPatients(value) {
-        wait.tokens = value || 0;
-        petriNet.reset({ wait: wait.tokens, free: 1 });
+    function setSpecialists(value) {
+        free.tokens = value || 0;
+        petriNet.reset({ free: free.tokens });
         petriNet = petriNet;
     }
     function fire(transition: Transition) {
@@ -45,11 +43,11 @@
         class="p-4 sm:w-1/3 sm:min-w-[12rem] bg-slate-50 border-b-1.5 sm:border-r-1.5 overflow-y-scroll"
     >
         <p>
-            Số bệnh nhân ban đầu:
+            Số bác sĩ ban đầu:
             <input
                 type="number"
-                value={wait.tokens}
-                on:change={e => setPatients(e.currentTarget.value)}
+                value={free.tokens}
+                on:change={e => setSpecialists(e.currentTarget.value)}
                 class="border-1.5 rounded-md w-12 text-center"
             />
         </p>
