@@ -44,11 +44,16 @@ export default class PetriNet {
         for (const place of this.places) {
             place.tokens = marking[place.label.content] || 0;
         }
-        this.firings = [];
     }
 
-    reset() {
+    reset(marking = this.initialMarking) {
         this.firings = [];
+        if (marking) this.initialMarking = marking;
         this.setMarking(this.initialMarking);
+    }
+
+    undoTo(i: number) {
+        this.firings = this.firings.slice(0, i + 1);
+        this.setMarking(this.firings[i].marking);
     }
 }

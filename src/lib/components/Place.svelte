@@ -1,23 +1,44 @@
 <script context="module" lang="ts">
-    const tokenPos = {
-        0: [],
-        1: [{ dx: 0, dy: 0 }],
-        2: [
+    const tokenPos = [
+        // 0
+        [],
+        // 1
+        [{ dx: 0, dy: 0 }],
+        // 2
+        [
             { dx: -0.3, dy: 0 },
             { dx: 0.3, dy: 0 },
         ],
-        3: [
+        // 3
+        [
             { dx: -0.5, dy: 0 },
             { dx: 0, dy: 0 },
             { dx: 0.5, dy: 0 },
         ],
-        4: [
+        // 4
+        [
             { dx: -0.3, dy: -0.3 },
             { dx: -0.3, dy: 0.3 },
             { dx: 0.3, dy: 0.3 },
             { dx: 0.3, dy: -0.3 },
         ],
-    };
+        // 5
+        [
+            { dx: -0.4, dy: -0.4 },
+            { dx: -0.4, dy: 0.4 },
+            { dx: 0, dy: 0 },
+            { dx: 0.4, dy: 0.4 },
+            { dx: 0.4, dy: -0.4 },
+        ],
+        [
+            { dx: 0.3, dy: 0.5 },
+            { dx: -0.3, dy: 0.5 },
+            { dx: 0.3, dy: 0 },
+            { dx: -0.3, dy: 0 },
+            { dx: -0.3, dy: -0.5 },
+            { dx: 0.3, dy: -0.5 },
+        ],
+    ];
 </script>
 
 <script lang="ts">
@@ -33,9 +54,10 @@
 <text
     class="fill-slate-500"
     x={place.shape.x}
-    y={place.shape.y + (place.label.position == "below"
-        ? 0.8 * Shape.unit
-        : -0.8 * Shape.unit)}
+    y={place.shape.y +
+        (place.label.position == "below"
+            ? 0.8 * Shape.unit
+            : -0.8 * Shape.unit)}
     alignment-baseline="central"
     text-anchor="middle"
 >
@@ -43,7 +65,7 @@
 </text>
 
 <!-- Tokens -->
-{#if place.tokens <= 4}
+{#if place.tokens < tokenPos.length}
     {#each tokenPos[place.tokens] as pos, i (i)}
         <circle
             class="token"
@@ -55,15 +77,18 @@
         />
     {/each}
 {:else}
-    <text
-        class="text-xl font-bold"
-        x={place.shape.x}
-        y={place.shape.y}
-        alignment-baseline="central"
-        text-anchor="middle"
-    >
-        {place.tokens}
-    </text>
+    {#key place.tokens}
+        <text
+            transition:fade|local={{ duration: 100 }}
+            class="text-xl font-bold"
+            x={place.shape.x}
+            y={place.shape.y}
+            alignment-baseline="central"
+            text-anchor="middle"
+        >
+            {place.tokens}
+        </text>
+    {/key}
 {/if}
 
 <style lang="postcss">

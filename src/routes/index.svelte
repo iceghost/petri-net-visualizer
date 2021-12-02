@@ -2,13 +2,13 @@
     import Card from '$lib/components/Card.svelte'
 </script>
 
-<main class="flex flex-col items-center">
+<main class="flex flex-col items-center py-8">
     <div class="w-full max-w-2xl">
         <img class="w-20 h-20" src="/logo.png" alt="logo bách khoa" />
         <p>Bài tập lớn</p>
         <h1 class="text-2xl font-bold uppercase tracking-wide">Ứng dụng mạng Petri</h1>
-        Chọn bài:
-        <div class="grid grid-cols-2 grid-rows-2 gap-4">
+        <p>Nhóm: BOT20</p>
+        <div class="grid grid-cols-2 grid-rows-2 gap-4 mt-8">
             <Card title="Mạng Petri bác sĩ 🧑‍⚕️" description="Mô hình mạng Petri cho một bác sĩ trong phòng khám"
                 imgSrc="/bac-si-covid.jpg" alt="Bác sĩ covid"
             />
