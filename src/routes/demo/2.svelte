@@ -76,7 +76,7 @@
             >
         </div>
         <div class="transition-[max-height] duration-500">
-            <Marking marking={petriNet.initialMarking} />
+            <Marking marking={petriNet.initialMarking} on:click={() => reset()}/>
             {#each petriNet.firings as { transition, marking }, i}
                 <p transition:fly|local={{ x: 0, y: -10 }}>⬇️ {transition}</p>
                 <Marking {marking} on:click={() => undoTo(i)}/>

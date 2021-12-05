@@ -59,6 +59,7 @@
             ? 0.8 * Shape.unit
             : -0.8 * Shape.unit)}
     alignment-baseline="central"
+    dominant-baseline="central"
     text-anchor="middle"
 >
     {place.label.content}
@@ -84,6 +85,7 @@
             x={place.shape.x}
             y={place.shape.y}
             alignment-baseline="central"
+            dominant-baseline="central"
             text-anchor="middle"
         >
             {place.tokens}

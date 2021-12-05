@@ -23,6 +23,7 @@
                 ? 0.8 * Shape.unit
                 : -0.8 * Shape.unit)}
         alignment-baseline="central"
+        dominant-baseline="central"
         text-anchor="middle"
     >
         {transition.label.content}

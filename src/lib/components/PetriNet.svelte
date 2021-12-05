@@ -15,7 +15,7 @@
 </script>
 
 <div class="w-full h-full overflow-auto">
-    <svg class="w-full min-w-[600px] h-full min-h-[400px]">
+    <svg class="w-full min-w-[600px] h-full min-h-[400px]" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <!-- prettier-ignore -->
             <marker id="triangle" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="10" markerHeight="10" orient="auto">

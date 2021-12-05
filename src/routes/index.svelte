@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-    <title>Bài tập lớn Mô hình hóa Toán học</title>
+    <title>Bài tập lớn Mô hình hóa Toán học | BOT20</title>
 </svelte:head>
 
 <main class="flex flex-col items-center py-8">
