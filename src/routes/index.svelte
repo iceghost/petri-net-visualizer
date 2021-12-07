@@ -52,7 +52,7 @@
             href="/demo/3"
         />
 
-        <p
+        <!-- <p
             class="mt-4 p-2 bg-blue-50 text-blue-900 rounded-md shadow-md text-justify"
         >
             Qua bài tập lớn lần này, nhóm đã tìm hiểu và biết thêm rất nhiều
@@ -61,7 +61,7 @@
             nhiều kiến thức cho nhóm có thể hoàn thành được bài tập lớn lần này
             và có thể hiểu thêm được một loại mô hình vẫn còn rất mới mẻ nhưng
             lại cực kì hữu ích trong cuộc sống thực tiễn!
-        </p>
+        </p> -->
 
         <div
             class="text-right text-sm mt-4 border-t pt-2 flex flex-col items-end"
